@@ -35,6 +35,7 @@ jobs:
 
       - name: Create distribution folder
         run: |
+          if (Test-Path "Lilica Excel") { Remove-Item "Lilica Excel" -Recurse -Force }
           mkdir "Lilica Excel"
           mkdir "Lilica Excel\dados"
           mkdir "Lilica Excel\dados\entrada"
@@ -45,6 +46,7 @@ jobs:
 
       - name: Create ZIP archive
         run: |
+          if (Test-Path "Lilica Excel.zip") { Remove-Item "Lilica Excel.zip" -Force }
           Compress-Archive -Path "Lilica Excel" -DestinationPath "Lilica Excel.zip"
 
       - name: Upload artifact

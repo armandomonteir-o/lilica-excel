@@ -1,0 +1,75 @@
+# Arquivos e diretórios Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Diretórios de ambiente virtual
+venv/
+env/
+ENV/
+.env/
+.venv/
+
+# Arquivos de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Arquivos de teste e cobertura
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+htmlcov/
+
+# Arquivos de log
+*.log
+logs/
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos temporários do Excel
+~$*.xlsx
+~$*.xls
+~$*.xlsm
+
+# Diretórios específicos do projeto
+dados/entrada/*
+dados/saida/*
+!dados/entrada/.gitkeep
+!dados/saida/.gitkeep
+
+# Arquivos de distribuição
+"Lilica Excel"/
+"Lilica Excel.exe"
+"Lilica Excel.spec"
+
+# Manter arquivos de exemplo
+!dados/entrada/exemplo_*.xlsx 

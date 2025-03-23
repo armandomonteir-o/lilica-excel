@@ -1,0 +1,70 @@
+name: Build Executável
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --clean --onefile --windowed `
+            --icon=assets/icon.ico `
+            --name="Lilica Excel" `
+            --add-data "README.md;." `
+            --add-data "Guia Rápido.md;." `
+            lilica_excel.py
+
+      - name: Create distribution folder
+        run: |
+          mkdir "Lilica Excel"
+          mkdir "Lilica Excel\dados"
+          mkdir "Lilica Excel\dados\entrada"
+          mkdir "Lilica Excel\dados\saida"
+          copy "dist\Lilica Excel.exe" "Lilica Excel"
+          copy "Guia Rápido.md" "Lilica Excel"
+          copy "README.md" "Lilica Excel"
+
+      - name: Create ZIP archive
+        run: |
+          Compress-Archive -Path "Lilica Excel" -DestinationPath "Lilica Excel.zip"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Lilica Excel
+          path: "Lilica Excel.zip"
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "Lilica Excel.zip"
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          body: |
+            Nova versão do Lilica Excel
+
+            Mudanças nesta versão:
+            - Executável atualizado
+            - Ícone do Justin Bieber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
